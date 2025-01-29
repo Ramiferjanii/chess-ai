@@ -15,12 +15,40 @@ class Main:
     def mainloop(self):
         game = self.game
         screen = self.screen
+        dragger = self.game.dragger
+        board = self.game.board
 
         while True:
             game.show_bg(screen)
             game.show_pieces(screen)
 
             for event in pygame.event.get():
+
+                if event.type == pygame.event.get():
+                    # click
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        dragger.Update_mouse(event.pos)
+
+                        clicked_row = dragger.mousey // sqsize
+                        clicked_col = dragger.mousex // sqsize
+
+                        print(dragger.mousey, clicked_row)
+                        print(dragger.mousex, clicked_col)
+
+                        # if clicked square has a piece ?
+                        if board.squares[clicked_row][clicked_col].has_piece():
+                            pass
+
+
+                    # mouse motion
+                    elif event.type == pygame.MOUSEMOTION:
+                        pass
+
+                    # CLICK REALISE
+                    elif event.type == pygame.MOUSEBUTTONUP:
+                        pass
+
+                # QUIT THE APPLICATION
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()

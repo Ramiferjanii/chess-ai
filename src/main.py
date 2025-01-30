@@ -4,6 +4,7 @@ from const import *
 from game import Game
 
 
+
 class Main:
 
     def __init__(self):
@@ -22,34 +23,29 @@ class Main:
             game.show_bg(screen)
             game.show_pieces(screen)
 
-            for event in pygame.event.get():
+            for event in pygame.event.get():  # Directly iterate through events
+                # Handle mouse button down
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    dragger.Update_mouse(event.pos)
+                    clicked_row = dragger.mousey // sqsize
+                    clicked_col = dragger.mousex // sqsize
 
-                if event.type == pygame.event.get():
-                    # click
-                    if event.type == pygame.MOUSEBUTTONDOWN:
-                        dragger.Update_mouse(event.pos)
+                    print(dragger.mousey, clicked_row)
+                    print(dragger.mousex, clicked_col)
 
-                        clicked_row = dragger.mousey // sqsize
-                        clicked_col = dragger.mousex // sqsize
-
-                        print(dragger.mousey, clicked_row)
-                        print(dragger.mousex, clicked_col)
-
-                        # if clicked square has a piece ?
-                        if board.squares[clicked_row][clicked_col].has_piece():
-                            pass
-
-
-                    # mouse motion
-                    elif event.type == pygame.MOUSEMOTION:
+                    if board.squares[clicked_row][clicked_col].has_piece():
                         pass
 
-                    # CLICK REALISE
-                    elif event.type == pygame.MOUSEBUTTONUP:
-                        pass
+                # Handle mouse motion
+                elif event.type == pygame.MOUSEMOTION:
+                    pass
 
-                # QUIT THE APPLICATION
-                if event.type == pygame.QUIT:
+                # Handle mouse button up
+                elif event.type == pygame.MOUSEBUTTONUP:
+                    pass
+
+                # Handle quit event
+                elif event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
 

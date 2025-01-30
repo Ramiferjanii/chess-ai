@@ -30,15 +30,17 @@ class Main:
                     clicked_row = dragger.mousey // sqsize
                     clicked_col = dragger.mousex // sqsize
 
-                    print(dragger.mousey, clicked_row)
-                    print(dragger.mousex, clicked_col)
+
 
                     if board.squares[clicked_row][clicked_col].has_piece():
-                        pass
+                        piece = board.squares[clicked_row][clicked_col].piece
+                        dragger.save_initial(event.pos)
+                        dragger.drag_piece((piece))
 
                 # Handle mouse motion
                 elif event.type == pygame.MOUSEMOTION:
-                    pass
+                    if dragger.dragging :
+                        dragger.update_blit(screen)
 
                 # Handle mouse button up
                 elif event.type == pygame.MOUSEBUTTONUP:

@@ -23,7 +23,6 @@ class Board:
         '''
 
         def knight_moves():
-            # 8 possible moves
             possible_moves = [
                 (row - 2, col + 1),
                 (row - 1, col + 2),
@@ -33,18 +32,15 @@ class Board:
                 (row + 1, col - 2),
                 (row - 1, col - 2),
                 (row - 2, col - 1),
-
             ]
-            for possible_moves in possible_moves:
-                possible_moves_row, possible_moves_col = possible_moves
-                if Square.in_range(possible_moves_row, possible_moves_col):
-                    if self.squares[possible_moves_row][possible_moves_col].isempty_or_rival(piece.color):
-                        # create squares of the new move
-                        initial = Square(row , col )
-                        final = Square(possible_moves_row , possible_moves_col ) #piece = piece
-                        # create new moves
-                        move = Move(initial , final)
-                        # append new bool move
+            for move in possible_moves:  # Rename loop variable
+                possible_row, possible_col = move
+                if Square.in_range(possible_row, possible_col):
+                    target_square = self.squares[possible_row][possible_col]
+                    if target_square.isempty_or_rival(piece.color):
+                        initial = Square(row, col)
+                        final = Square(possible_row, possible_col)
+                        move = Move(initial, final)
                         piece.add_move(move)
 
 

@@ -45,7 +45,8 @@ class Board:
                         # create new moves
                         move = Move(initial , final)
                         # append new bool move
-                        pass
+                        piece.add_move(move)
+
 
         if isinstance(piece, Pawn):
             pass

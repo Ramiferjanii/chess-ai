@@ -66,15 +66,37 @@ class Board:
                 possible_move_row = row + row_incr
                 possible_move_col = col + col_incr
 
-                #while True
+            while True :
                 if Square.in_range(possible_move_row , possible_move_col) :
-                    # empty
-                    if self.squares[possible_move_row][possible_move_col] :
-                        pass
+
+                    # create squares of the possible new move
+                    initial = Square(row , col )
+                    final = Square(possible_move_row , possible_move_col)
+                    # create ea possible new move
+                    move = Move(initial , final)
+                    # append new move
+
+                    # empty = continue looping
+                    if self.squares[possible_move_row][possible_move_col].isempty() :
+                        # create new move
+                        piece.add_move(move)
 
 
                     # has enemy piece
-                    
+                    if self.squares[possible_move_row][possible_move_col].has_enemy_piece(piece.color):
+                        # create new move
+                        piece.add_move(move)
+                        break
+
+
+                else : break
+                # increementing incrs
+
+                possible_move_row = possible_move_row + row_incr
+                possible_move_col = possible_move_col + col_incr
+
+
+
 
 
 

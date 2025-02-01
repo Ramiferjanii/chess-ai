@@ -109,7 +109,6 @@ class Board:
         # these are all pawns
         for col in range(cols):
             self.squares[row_pawn][col] = Square(row_pawn, col, Pawn(color))
-        self.squares[5][0] = Square(5, 0, Pawn(color))
         # knights
         self.squares[row_other][1] = Square(row_other, 1, Knight(color))
         self.squares[row_other][6] = Square(row_other, 6, Knight(color))

@@ -66,34 +66,37 @@ class Board:
                 possible_move_row = row + row_incr
                 possible_move_col = col + col_incr
 
-            while True :
-                if Square.in_range(possible_move_row , possible_move_col) :
+                while True :
+                    if Square.in_range(possible_move_row , possible_move_col) :
 
-                    # create squares of the possible new move
-                    initial = Square(row , col )
-                    final = Square(possible_move_row , possible_move_col)
-                    # create ea possible new move
-                    move = Move(initial , final)
-                    # append new move
+                         # create squares of the possible new move
+                        initial = Square(row , col )
+                        final = Square(possible_move_row , possible_move_col)
+                        # create ea possible new move
+                        move = Move(initial , final)
+                        # append new move
 
-                    # empty = continue looping
-                    if self.squares[possible_move_row][possible_move_col].isempty() :
-                        # create new move
-                        piece.add_move(move)
-
-
-                    # has enemy piece
-                    if self.squares[possible_move_row][possible_move_col].has_enemy_piece(piece.color):
-                        # create new move
-                        piece.add_move(move)
-                        break
+                        # empty = continue looping
+                        if self.squares[possible_move_row][possible_move_col].isempty() :
+                            # create new move
+                            piece.add_move(move)
 
 
-                else : break
-                # increementing incrs
+                        # has enemy piece = add move + break
+                        if self.squares[possible_move_row][possible_move_col].has_enemy_piece(piece.color):
+                            # create new move
+                            piece.add_move(move)
+                            break
 
-                possible_move_row = possible_move_row + row_incr
-                possible_move_col = possible_move_col + col_incr
+                        #    has team piece
+                        if self.squares[possible_move_row][possible_move_col].has_team_piece(piece.color):
+                            break
+
+                    else : break
+                    # increementing incrs
+
+                    possible_move_row = possible_move_row + row_incr
+                    possible_move_col = possible_move_col + col_incr
 
 
 
@@ -128,16 +131,15 @@ class Board:
         elif isinstance(piece, Knight):
             knight_moves()
         elif isinstance(piece, Rook):
-            straightline_moves(
-                ( -1, 0 ) , #up
-                (0 , 1 ) , #left
-                (1 , 0 ) , # down
-                (0 , -1 ) , # left
-            )
+            straightline_moves([
+                (-1, 0),  # Up
+                (0, 1),  # Right
+                (1, 0),  # Down
+                (0, -1)  # Left
+            ])
         elif isinstance(piece, Queen):
-            straightline_moves(
                 straightline_moves(
-                    [(-1, 1),  # up right
+                [(-1, 1),  # up right
                      (-1, -1),  # up left
                      (1, 1),  # down right
                      (1, -1),  # down left
@@ -146,7 +148,7 @@ class Board:
                      (1, 0),  # down
                      (0, -1),  # left
                      ])
-            )
+
         elif isinstance(piece, King):
             pass
         elif isinstance(piece, Bishop):
@@ -182,6 +184,7 @@ class Board:
         # bishops
         self.squares[row_other][2] = Square(row_other, 2, Bishop(color))
         self.squares[row_other][5] = Square(row_other, 5, Bishop(color))
+        self.squares[5][7] = Square(5, 7, Bishop(color))
 
         # rooks
         self.squares[row_other][0] = Square(row_other, 0, Rook(color))

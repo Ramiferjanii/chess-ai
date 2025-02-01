@@ -1,3 +1,5 @@
+
+
 from const import *
 from square import Square
 from piece import *
@@ -26,18 +28,39 @@ class Board:
 
         '''
 
-        def pawn_moves(self):
+        def pawn_moves():
             # steps
             steps  = 1 if piece.moved else 2
 
             #vertical move
             start = row + piece.dir
             end = row + (piece.dir   * (1  + steps ) )
-            for move_row in range(start , end , piece.dir ) :
-                pass 
-
-
+            for possible_move_row in range(start , end , piece.dir ) :
+                if Square.in_range(possible_move_row) :
+                    if self.squares[possible_move_row][col].isempty() :
+                        #create initial and final move squares
+                        initial = Square(row , col)
+                        final = Square(possible_move_row , col )
+                        move = Move(initial , final)
+                        piece.add_move(move)
+                    #get_blocked()
+                    else : break
+                else : break # not in range
             #digramme moves
+            possible_move_row  = row + piece.dir
+            possible_move_col = [col -1 , col +1 ]
+            for possible_move_col in possible_move_col :
+                if Square.in_range(possible_move_row , possible_move_col) :
+                    if self.squares[possible_move_row][possible_move_col].has_enemy_piece(piece.color) :
+                        # create initial and final moves
+                        initial = Square( row , col )
+                        final = Square(possible_move_row , possible_move_col)
+                        # create a new move
+                        move = Move(initial , final )
+                        #append new move
+                        piece.add_move(move)
+
+
 
 
 
@@ -56,7 +79,7 @@ class Board:
                 possible_row, possible_col = move
                 if Square.in_range(possible_row, possible_col):
                     target_square = self.squares[possible_row][possible_col]
-                    if target_square.isempty_or_rival(piece.color):
+                    if target_square.isempty_or_enemy(piece.color):
                         initial = Square(row, col)
                         final = Square(possible_row, possible_col)
                         move = Move(initial, final)
@@ -86,6 +109,7 @@ class Board:
         # these are all pawns
         for col in range(cols):
             self.squares[row_pawn][col] = Square(row_pawn, col, Pawn(color))
+        self.squares[5][0] = Square(5, 0, Pawn(color))
         # knights
         self.squares[row_other][1] = Square(row_other, 1, Knight(color))
         self.squares[row_other][6] = Square(row_other, 6, Knight(color))

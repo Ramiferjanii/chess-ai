@@ -12,6 +12,10 @@ class Board:
         self._add_pieces('white')
         self._add_pieces('black')
 
+
+
+
+
     def calc_moves(self, piece, row, col):
         '''
 
@@ -21,6 +25,21 @@ class Board:
         :return:  calculate all the possible (valid ) moves of an specific piece ona a specific position
 
         '''
+
+        def pawn_moves(self):
+            # steps
+            steps  = 1 if piece.moved else 2
+
+            #vertical move
+            start = row + piece.dir
+            end = row + (piece.dir   * (1  + steps ) )
+            for move_row in range(start , end , piece.dir ) :
+                pass 
+
+
+            #digramme moves
+
+
 
         def knight_moves():
             possible_moves = [
@@ -44,27 +63,12 @@ class Board:
                         piece.add_move(move)
 
 
-        if isinstance(piece, Pawn):
-            pass
-
-        elif isinstance(piece, Knight):
-            knight_moves()
-
-
-        elif isinstance(piece, Rook):
-            pass
-
-
-        elif isinstance(piece, Queen):
-            pass
-
-
-        elif isinstance(piece, King):
-            pass
-
-
-        elif isinstance(piece, Bishop):
-            pass
+        if isinstance(piece, Pawn): pawn_moves()
+        elif isinstance(piece, Knight):knight_moves()
+        elif isinstance(piece, Rook): pass
+        elif isinstance(piece, Queen): pass
+        elif isinstance(piece, King): pass
+        elif isinstance(piece, Bishop): pass
 
     # we put '_' after the name of the function to indicate that these methods are private
     def _create(self):

@@ -10,8 +10,13 @@ class Board:
         self.squares = [[None for _ in range(cols)] for _ in range(rows)]
 
         self._create()
+        self.last_move = None
         self._add_pieces('white')
         self._add_pieces('black')
+
+
+    def __eq__(self, other):
+        return self.row == other.row and self.col == other.col
 
 
 
@@ -31,6 +36,8 @@ class Board:
 
         # clear valid moves
         piece.clear_moves()
+        # set last move
+        self.last_move = move
 
 
 

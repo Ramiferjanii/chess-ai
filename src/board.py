@@ -60,6 +60,33 @@ class Board:
                         #append new move
                         piece.add_move(move)
 
+        def king_moves() :
+             adjs = [
+                 (row-1 , col+0) , # up
+                 (row-1 , col+1) , #up-right
+                 (row+0 , col+1) , # right
+                 (row+1 , col+1) , # down-right
+                 (row+1 , col+0) , # down
+                 (row+1 , col-1) , # down-left
+                 (row+0 , col-1) , # left
+                 (row-1 , col-1) , # up-left
+             ]
+            for possible_move in adjs :
+                possible_move_row , possible_move_col = possible_move
+
+                if Square.in_range(possible_move_row, possible_move_col) :
+                    if self.squares[possible_move_row][possible_move_col].isempty_or_enemy(piece.color) :
+                        # create initial and final moves
+                        initial = Square(row, col)
+                        final = Square(possible_move_row, possible_move_col)
+                        # create a new move
+                        move = Move(initial, final)
+                        # append new move
+                        piece.add_move(move)
+
+
+
+
         def straightline_moves(incrs) :
             for incr in incrs :
                 row_incr , col_incr = incr
@@ -135,7 +162,7 @@ class Board:
                 (-1, 0),  # Up
                 (0, 1),  # Right
                 (1, 0),  # Down
-                (0, -1)  # Left
+                (0, -1) , # Left
             ])
         elif isinstance(piece, Queen):
                 straightline_moves(
@@ -150,7 +177,11 @@ class Board:
                      ])
 
         elif isinstance(piece, King):
-            pass
+            king_moves()
+
+
+
+
         elif isinstance(piece, Bishop):
             straightline_moves(
                 [(-1 , 1) , # up right
@@ -184,7 +215,7 @@ class Board:
         # bishops
         self.squares[row_other][2] = Square(row_other, 2, Bishop(color))
         self.squares[row_other][5] = Square(row_other, 5, Bishop(color))
-        self.squares[5][7] = Square(5, 7, Bishop(color))
+
 
         # rooks
         self.squares[row_other][0] = Square(row_other, 0, Rook(color))

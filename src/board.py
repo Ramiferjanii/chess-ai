@@ -15,6 +15,32 @@ class Board:
 
 
 
+    def move(self , piece , move):
+        initial = move.initial
+        final = move.final
+
+
+        #console board move update
+        self.squares[initial.row][initial.col].piece = None
+        self.squares[final.row][final.col].piece = piece
+
+
+        # move
+        piece.moved = True
+
+
+        # clear valid moves
+        piece.clear_moves()
+
+
+
+
+
+    def valid_move(self , piece , move ):
+        return move in piece.moves
+
+
+
 
 
     def calc_moves(self, piece, row, col):
@@ -80,6 +106,19 @@ class Board:
                         final = Square(possible_move_row, possible_move_col)
                         move = Move(initial, final)
                         piece.add_move(move)
+
+
+
+            # castling moves
+
+
+            # queen casting
+
+
+            # king casting
+
+
+
 
         def straightline_moves(incrs):
             for incr in incrs:

@@ -51,7 +51,7 @@ class Game:
                 pygame.draw.rect(surface, color, rect)
 
     def show_last_move(self, surface):
-        theme = self.config.theme  # Corrected from self.config.themes
+        theme = self.config.theme
         if self.board.last_move:
             initial = self.board.last_move.initial
             final = self.board.last_move.final
@@ -81,6 +81,15 @@ class Game:
 
     def change_theme(self):
         self.config.change_theme()
+
+
+
+    def play_sound(self , captured=False):
+        if captured :
+            self.config.capture_sound.play()
+        else :
+            self.config.move_sound.play()
+
 
 
 

@@ -61,23 +61,22 @@ class Board:
         '''
 
         def pawn_moves():
-            # steps
-            steps  = 1 if piece.moved else 2
-
-            #vertical move
+            steps = 1 if piece.moved else 2
             start = row + piece.dir
-            end = row + (piece.dir   * (1  + steps ) )
-            for possible_move_row in range(start , end , piece.dir ) :
-                if Square.in_range(possible_move_row) :
-                    if self.squares[possible_move_row][col].isempty() :
-                        #create initial and final move squares
-                        initial = Square(row , col)
-                        final = Square(possible_move_row , col )
-                        move = Move(initial , final)
+            end = row + (piece.dir * (steps + 1))
+            step_size = piece.dir  # Direction: -1 (white) or 1 (black)
+
+            for possible_move_row in range(start, end, step_size):
+                if Square.in_range(possible_move_row):
+                    if self.squares[possible_move_row][col].isempty():
+                        initial = Square(row, col)
+                        final = Square(possible_move_row, col)
+                        move = Move(initial, final)
                         piece.add_move(move)
-                    #get_blocked()
-                    else : break
-                else : break # not in range
+                    else:
+                        break  # Blocked by a piece
+                else:
+                    break  # Out of bounds
             #digramme moves
             possible_move_row  = row + piece.dir
             possible_move_col = [col -1, col + 1]

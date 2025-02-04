@@ -1,8 +1,7 @@
-
 from const import *
 from square import Square
 from piece import *
-from move import  *
+from move import *
 
 
 class Board:
@@ -14,41 +13,46 @@ class Board:
         self._add_pieces('white')
         self._add_pieces('black')
 
-
     def __eq__(self, other):
         return self.row == other.row and self.col == other.col
 
-
-
-    def move(self , piece , move):
+    def move(self, piece, move):
         initial = move.initial
         final = move.final
-
 
         #console board move update
         self.squares[initial.row][initial.col].piece = None
         self.squares[final.row][final.col].piece = piece
 
+        # pawn promotin
+        if isinstance(piece, Pawn):
+            self.check_promotion(piece, final)
+
+        # king casling
+        if isinstance(piece, King):
+            if self.casling(initial, final):
+                dift = final.col - initial.col
+                rook = piece.left_rook if (dift < 0) else piece.right_rook
+                self.move(rook, rook.moves[-1])
+
 
         # move
         piece.moved = True
-
 
         # clear valid moves
         piece.clear_moves()
         # set last move
         self.last_move = move
 
-
-
-
-
-    def valid_move(self , piece , move ):
+    def valid_move(self, piece, move):
         return move in piece.moves
 
+    def check_promotion(self, piece, final):
+        if final.row == 0 or final.row == 7:
+            self.squares[final.row][final.col].piece = Queen(piece.color)
 
-
-
+    def casling(self, initial, final):
+        return abs(initial.col - final.col) == 2
 
     def calc_moves(self, piece, row, col):
         '''
@@ -78,8 +82,8 @@ class Board:
                 else:
                     break  # Out of bounds
             #digramme moves
-            possible_move_row  = row + piece.dir
-            possible_move_col = [col -1, col + 1]
+            possible_move_row = row + piece.dir
+            possible_move_col = [col - 1, col + 1]
             for possible_move_col in possible_move_col:
                 if Square.in_range(possible_move_row, possible_move_col):
                     if self.squares[possible_move_row][possible_move_col].has_enemy_piece(piece.color):
@@ -113,18 +117,56 @@ class Board:
                         move = Move(initial, final)
                         piece.add_move(move)
 
-
-
             # castling moves
+            if not piece.moved:
+                # queen casting
+                left_rook = self.squares[row][0].piece
+                if isinstance(left_rook, Rook):
+                    if not left_rook.moved:
+                        for c in range(1, 4):
+                            if self.squares[row][c].has_piece():  # casling is not possible because there are pieces in between
+                                break
+
+                            if c == 3:
+                                # ads left rook to king
+                                piece.left_rook = left_rook
+
+                                # rook move
+                                initial = Square(row, 0)
+                                final = Square(row, 3)
+                                move = Move(initial, final)
+                                left_rook.add_move(move)
+
+                                # king move
+                                initial = Square(row, col)
+                                final = Square(row, 2)
+                                move = Move(initial, final)
+                                piece.add_move(move)
 
 
-            # queen casting
+                # king casting
+                right_rook = self.squares[row][7].piece
+                if isinstance(right_rook, Rook):
+                    if not right_rook.moved:
+                        for c in range(5, 7):
+                            if self.squares[row][c].has_piece():  # casling is not possible because there are pieces in between
+                                break
 
+                            if c == 6:
+                                # ads right rook to king
+                                piece.right_rook = right_rook
 
-            # king casting
+                                # rook move
+                                initial = Square(row, 7)
+                                final = Square(row, 5)
+                                move = Move(initial, final)
+                                right_rook.add_move(move)
 
-
-
+                                # king move
+                                initial = Square(row, col)
+                                final = Square(row, 6)
+                                move = Move(initial, final)
+                                piece.add_move(move)
 
         def straightline_moves(incrs):
             for incr in incrs:
@@ -256,4 +298,3 @@ class Board:
 
         # king
         self.squares[row_other][4] = Square(row_other, 4, King(color))
-

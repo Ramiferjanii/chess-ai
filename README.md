@@ -1,27 +1,31 @@
-# Game Instructions
+# Python Chess Engine ♟️
 
-* Working on AI gamemode...
+[![Python Version](https://img.shields.io/badge/python-3.10%2B-blue)](https://www.python.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-- Entry point: main.py
-- Press 't' to change theme (green, brown, blue, gray)
-- Press 'r' to restart the game
+A command-line chess game implementation in Python with complete chess rules, move validation, and game play features.
 
-# Game Snapshots
+![Chess CLI Demo](demo.gif) <!-- Add actual demo gif/png if available -->
 
-## Snapshot 1 - Start (green)
-![snapshot1](snapshots/snapshot1.png)
+## Features ✨
+- ♟️ Full chess rules implementation
+- ✓ Move validation and legal move highlighting
+- ♜ Check/checkmate/stalemate detection
+- 📜 Move history with algebraic notation
+- ♙ Pawn promotion and special moves (en passant, castling)
+- 💾 Save/Load game functionality
+- 🕒 Turn timer support
+- 🎨 Colored terminal interface
 
-## Snapshot 2 - Start (brown)
-![snapshot2](snapshots/snapshot2.png)
+## Requirements 📋
+- Python 3.10+
+- pip package manager
 
-## Snapshot 3 - Start (blue)
-![snapshot3](snapshots/snapshot3.png)
+## Installation 🛠️
+```bash
+# Clone the repository
+git clone https://github.com/Ramiferjanii/chess.git
+cd chess
 
-## Snapshot 4 - Start (gray)
-![snapshot4](snapshots/snapshot4.png)
-
-## Snapshot 5 - Valid Moves
-![snapshot5](snapshots/snapshot5.png)
-
-## Snapshot 6 - Castling
-![snapshot6](snapshots/snapshot6.png)
+# Install dependencies
+pip install -r requirements.txt

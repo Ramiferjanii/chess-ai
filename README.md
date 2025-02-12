@@ -29,3 +29,21 @@ cd chess
 
 # Install dependencies
 pip install -r requirements.txt
+
+chess/
+├── src/
+│   ├── game/              # Core game logic
+│   │   ├── board.py       # Board representation
+│   │   ├── pieces.py      # Piece classes and movement
+│   │   └── engine.py      # Game engine and rules
+│   ├── interface/         # CLI interface
+│   │   ├── cli.py         # Command-line interface
+│   │   └── display.py     # Board rendering
+│   ├── utils/             # Utilities
+│   │   ├── helpers.py     # Helper functions
+│   │   └── exceptions.py  # Custom exceptions
+│   └── main.py            # Main entry point
+├── tests/                 # Unit tests
+├── saved_games/           # Saved game states
+├── requirements.txt       # Dependencies
+└── LICENSE
